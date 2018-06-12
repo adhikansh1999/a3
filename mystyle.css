@@ -1,0 +1,220 @@
+	@import url('https://fonts.googleapis.com/css?family=Courgette');
+	*{
+		background-repeat: no-repeat;
+		background-size: contain;
+	}
+	body{
+		background-image: url('bg2.png') ;
+	}
+	#outer-grid{
+		
+		width: 81.8vh;
+		height: 81.8vh;
+		position: relative;
+		margin: 9.1vh auto;
+		border: 0.2vh solid black;
+		background-color: #fdff93;
+
+	}
+	.box {
+		width: 10vh;
+		height: 10vh;
+		margin: none;
+		padding: none;
+		border-bottom: 0.2vh solid black;
+		text-align: center;
+		vertical-align: middle;
+		font-size: 1.25em;
+		font-weight: bold;
+		border-radius: 1vh;
+		background-color: white;
+		/*border-color: #1AAB8A;*/
+	}
+
+	.top {
+		display: inline-block;
+		float: left;
+		border-right: 0.2vh solid black;
+		border-top: 0.2vh solid black;
+	}
+
+	.left {
+		position: relative;
+		top: 10.4vh;
+		left: 0;
+		border: 0.2vh solid black;
+		border-top: none;
+	}
+
+	.right {
+		position: relative;
+		top: -50.8vh;
+		left: 71.4vh;
+		border: 0.2vh solid black;
+		border-top: none;
+	}
+
+	.bottom {
+		display: inline-block;
+		float: left;
+		position: relative;
+		top: -51vh;
+		border-right: 0.2vh solid black;
+		border-top: 0.2vh solid black;
+	}
+	#console{
+		border : 0.5vh solid #1AAB8A;
+		border-radius: 1.5vh;
+		margin: 0vh auto;
+		padding: 0px;
+		text-align: center;
+		position: relative;
+		width: 30vh;
+		height: 30vh;
+		top: -65vh;
+	}
+	/*use this for elements inside the console*/
+	.c_elements{
+		border : 0.1vh solid #1AAB8A;
+		width: 30vh;
+		height: 7.5vh;
+		-webkit-box-sizing: border-box;
+	    -moz-box-sizing: border-box;
+	    box-sizing: border-box;
+	}
+
+	#lockerA {
+		position: absolute;
+		left: -30vh;
+		top: 0vh;
+		font-family: 'Courgette';
+		text-shadow: 4px 4px 4px #aaa;
+		font-size: 15px;
+		font-weight: bold;
+		color :white;
+
+	}
+
+	#lockerB {
+		position: absolute;
+		bottom: 0vh;
+		left: 86.5vh;
+		font-family: 'Courgette';
+		text-shadow: 4px 4px 4px #aaa;
+		font-size: 15px;
+		font-weight: bold;
+		color :white;
+
+	}
+
+	.locker {
+		height: 15vh;
+		width: 25vh;
+		text-align: center;
+		border: 0.6vh outset #1AAB8A;
+		border-radius: 2vh;
+	}
+	img{
+		height: 10vh;
+		width: 10vh;
+	}
+	button{
+	  background:#1AAB8A;
+	  color:#fff;
+	  border:none;
+	  position:relative;
+	  height:7.5vh;
+	  width: 29.7vh;
+	  font-size:1.6em;
+	  padding:0 2em;
+	  cursor:pointer;
+	  transition:800ms ease all;
+	  outline:none;
+	}
+	button:hover{
+	  background:#fff;
+	  color:#1AAB8A;
+	}
+	button:before,button:after{
+	  content:'';
+	  position:absolute;
+	  top:0;
+	  right:0;
+	  height:2px;
+	  width:0;
+	  background: #1AAB8A;
+	  transition:400ms ease all;
+	}
+
+	button:after{
+	  right:inherit;
+	  top:inherit;
+	  left:0;
+	  bottom:0;
+	}
+	button:hover:before,button:hover:after{
+	  width:100%;
+	  transition:800ms ease all;
+	}
+	.endgame{
+		width: 10vh;
+		height: 10vh;
+		margin: none;
+		padding: none;
+		border: 0.6vh solid #1AAB8A;
+		text-align: center;
+		vertical-align: middle;
+		border-radius: 2vh;
+		overflow: auto;
+		display: inline-block;
+		position: relative;
+
+	}
+	#a1Comp{
+		/*float: left;*/
+		display: inline-block;
+		top:-110vh;
+		left: -30vh;
+	}
+	#a2Comp{
+		top: -110vh;
+		left:-29vh;
+
+	}
+	#b1Comp{
+		top: -90vh;
+		left: 65vh;
+
+
+	}
+	#b2Comp{
+		top: -90vh;
+		left:66vh;
+	}
+	p {
+	font-family: 'Courgette';
+	text-shadow: 4px 4px 4px #aaa;
+	font-size: 30px;
+	font-weight: bold;
+	color:white;
+	/*text-align: center;*/
+	}
+	#turn{
+		font-family: 'Helvetica';
+		text-shadow: 4px 4px 4px #aaa;
+		font-size: 25px;
+		/*font-weight: bold;*/
+		color :white;
+		text-align: center;
+
+	}
+	#No_chosen{
+		font-family: 'Helvetica';
+		text-shadow: 4px 4px 4px #aaa;
+		font-size: 35px;
+		font-weight: bold;
+		color :white;
+		text-align: center;
+
+	}
+

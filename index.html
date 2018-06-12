@@ -1,0 +1,549 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="mystyle.css">
+	<script src="jquery-3.3.1.min.js"></script>
+
+	<script src="java.js"></script>
+
+	<title>myLudo</title>
+
+</head>
+<!--<body>-->
+<body onload="display()">
+	<div id = "outer-grid">
+
+		<div class="box top" id="0" onclick="" style="border-left: 0.2vh solid black; background-color: #cc0000;"><br></div>
+		<div class="box top" id="1" onclick=""></div>
+		<div class="box top" id="2" onclick=""></div>
+		<div class="box top" id="3" onclick=""></div>
+		<div class="box top" id="4" onclick=""></div>
+		<div class="box top" id="5" onclick=""></div>
+		<div class="box top" id="6" onclick=""></div>
+		<div class="box top" id="7" onclick=""></div>
+		<div class="box left" id="27" onclick="" style="background-color: red;"></div>
+		<div class="box left" id="26" onclick=""></div>
+		<div class="box left" id="25" onclick=""></div>
+		<div class="box left" id="24" onclick=""></div>
+		<div class="box left" id="23" onclick=""></div>
+		<div class="box left" id="22" onclick=""></div>
+		<div class="box right" id="8" onclick=""></div>
+		<div class="box right" id="9" onclick=""></div>
+		<div class="box right" id="10" onclick=""></div>
+		<div class="box right" id="11" onclick=""></div>
+		<div class="box right" id="12" onclick=""></div>
+		<div class="box right" id="13" onclick="" style="background-color: blue;"></div>
+		<div class="box bottom" id="21" onclick="" style="border-left: 0.2vh solid black"></div>
+		<div class="box bottom" id="20" onclick=""></div>
+		<div class="box bottom" id="19" onclick=""></div>
+		<div class="box bottom" id="18" onclick=""></div>
+		<div class="box bottom" id="17" onclick=""></div>
+		<div class="box bottom" id="16" onclick=""></div>
+		<div class="box bottom" id="15" onclick=""></div>
+		<div class="box bottom" id="14" onclick="" style="background-color: #0000cc;"></div>
+
+
+		
+		<div id="lockerA" class="locker">
+			<h2>Locker for A</h2>
+			<h1 id = "h1a">2 A</h1>
+		</div>
+		
+		<div id="lockerB" class="locker">
+			<h2>Locker for B</h2>
+			<h1 id = "h1b">2 B</h1>
+		</div>
+		<div class="endgame" id="a1Comp"></div>
+		<div class="endgame" id="a2Comp"></div>
+		<div class="endgame" id="b1Comp"></div>
+		<div class="endgame" id="b2Comp"></div>
+
+		
+	</div>
+	<div id = "console">
+			<div class = "c_elements" id = "turn" style="vertical-align: middle">Its A's turn</div>
+			<div class = "c_elements" id = "roll"><button>ROLL!</button></div>
+			<div class = "c_elements" id = "No_chosen"></div>
+			<div class = "c_elements" id = "">
+				<select id="rtest">
+					<option value=0></option>
+					<option value=1>1</option>
+					<option value=2>2</option>
+					<option value=3>3</option>
+					<option value=4>4</option>
+					<option value=5>5</option>
+					<option value=6>6</option>
+				</select><br />
+			</div>
+	</div>
+	<p id = "demo" style="position: relative;float: center; top : -68vh; left: -71vh;"></p>
+
+
+</body>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+	var dice_val;
+	var diceInput;
+	var lockedA = 2,lockedB = 2,freeA = 0,freeB = 0;
+	var player = "a";
+	//stores the position in a class -1 means that its locked
+	var pos = {A1: "-1", A2: "-1", B1: "-1", B2: "-1"};
+	var newpos = {A1: "-1", A2: "-1", B1: "-1", B2: "-1"};
+	var box = $(".box");
+
+
+	document.getElementById("demo").innerHTML = "Roll the dice to see what happens";
+
+	function random_no(){
+		dice_val = 1+Math.floor(Math.random() * 6);
+		document.getElementById('No_chosen').innerHTML = dice_val;
+	}
+	function updateTurn() {
+		if (dice_val == 6)
+			return;
+		else{
+			if(player == "a"){
+				player ="b";
+				$("#turn").text(function(){
+            		return "It's B's turn!"; 
+        		});
+			}
+			else{
+				player = "a";
+				$("#turn").text(function(){
+            		return "It's A's turn!"; 
+        		});
+			}
+		}
+	}
+
+	function checkCut()
+	{
+		if(Number(newpos["A1"]) != -1 && (newpos["A1"] == newpos["B1"]))
+		{
+			if(player == "a")
+			{
+				newpos["B1"] = newpos["B2"];
+				newpos["B2"] = "-1";
+				//newpos["B1"] = -1;
+				lockedB += 1;
+				freeB -= 1;
+				$("#h1b").text(lockedB + "B");
+			}
+			else {
+
+				newpos["A1"] = newpos["A2"];
+				newpos["A2"] = "-1";
+				//newpos["A1"] = "-1";
+				lockedA += 1;
+				freeA -= 1; 
+				$("#h1a").text(lockedA + "A");
+			}
+
+		}
+		if( Number(newpos["A1"]) != -1 && (newpos["A1"] == newpos["B2"]) )
+		{
+			if(player == "a")
+			{
+				newpos["B2"] = "-1";
+				lockedB += 1;
+				freeB -= 1; 
+				$("#h1b").text(lockedB + "B");
+			}
+			else {
+				newpos["A1"] = newpos["A2"];
+				newpos["A2"] = "-1";
+				//newpos["A1"] = "-1";
+				lockedA += 1;
+				freeA -= 1;
+				$("#h1a").text(lockedA + "A");
+			}
+		}
+		if( Number(newpos["A2"]) != -1 && (newpos["A2"] == newpos["B1"]))
+		{
+			if(player == "a")
+			{
+				newpos["B1"] = newpos["B2"];
+				newpos["B2"] = "-1";
+				lockedB += 1;
+				freeB -= 1; 
+				$("#h1b").text(lockedB + "B");
+			}
+			else {
+				newpos["A2"] = "-1";
+				lockedA += 1;
+				freeA -= 1;
+				$("#h1a").text(lockedA + "A");
+			}
+
+		}
+		if( Number(newpos["A2"]) != -1 && (newpos["A2"] == newpos["B2"]) )
+		{
+			if(player == "a")
+			{
+				newpos["B2"] = "-1";
+				lockedB += 1;
+				freeB -= 1; 
+				$("#h1b").text(lockedB + "B");
+			}
+			else {
+				newpos["A2"] = "-1";
+				lockedA += 1;
+				freeA -= 1;
+				$("#h1a").text(lockedA + "A");
+			}
+
+			
+		}
+		
+	}
+
+
+
+	function display() {
+		// clearing the images everywhere at old pos.
+		//adds image everwhere at new pos
+		//sets pos = newpos
+
+		checkCut();
+		if(pos["A1"] == "a1Comp")
+			newpos["A1"] = pos["A1"];
+		if(pos["A2"] == "a2Comp")
+			newpos["A2"] = pos["A2"];
+		if(pos["B1"] == "b1Comp")
+			newpos["B1"] = pos["B1"];
+		if(pos["B2"] == "b2Comp")
+			newpos["B2"] = pos["B2"];
+
+		//if the old position is -1 it sets it as the locker.
+		var str = ["#" + pos["A1"],"#" + pos["A2"],"#" + pos["B1"],"#" + pos["B2"]];
+		for (var i = 0; i < 4; i++) {
+			if(str[i] == "#-1" && i<2)
+				str[i] = "#lockerA";
+			else if(str[i] == "#-1" && i>=2)
+				str[i] = "#lockerB";
+		}
+			$(str[0]).css("background-image","none");
+			$(str[1]).css("background-image","none");
+			$(str[2]).css("background-image","none");
+			$(str[3]).css("background-image","none");
+		//now for adding new pos
+		str[0] = "#" + newpos["A1"];
+		str[1] = "#" + newpos["A2"];
+		str[2] = "#" + newpos["B1"];
+		str[3] = "#" + newpos["B2"];
+
+		//if the new position is  -1
+		for (var i = 0; i < 4; i++) {
+			if(str[i] == "#-1" && i<2)
+				str[i] = "#lockerA";
+			else if(str[i] == "#-1" && i>=2)
+				str[i] = "#lockerB";
+		}			
+			$(str[0]).css("background-image","url('red.png')");
+			$(str[1]).css("background-image","url('red.png')");
+			$(str[2]).css("background-image","url('blue.png')");
+			$(str[3]).css("background-image","url('blue.png')");
+		pos["A1"] = newpos["A1"];
+		pos["A2"] = newpos["A2"];
+		pos["B1"] = newpos["B1"];
+		pos["B2"] = newpos["B2"];
+
+		//checks the win
+		if(  (pos["B1"] == "b1Comp" && pos["B2"] == "b2Comp") || (pos["B1"] == "b2Comp" && pos["B2"] == "b1Comp") )
+		{
+			alert("Congratulations!!!! player B wins. Refresh to start another game");
+			$("#roll").off("click");
+		}
+		else if(  (pos["A1"] == "a1Comp" && pos["A2"] == "a2Comp") || (pos["A1"] == "a2Comp" && pos["A2"] == "a1Comp") )
+		{
+			alert("Congratulations!!!! player A wins. Refresh to start another game");
+			$("#roll").off("click");
+		}
+		
+	}
+
+	//these functions set newpos = dice val + pos of a free token
+	//what happens when one of them is on the edge of win but does not have 
+	//the winning no on the dice and the other is not on the edge of the win 
+	function movea1() {
+		if(Number(pos["A1"])>=22 && (dice_val + Number(pos["A1"]) === 28) ){
+			
+			newpos["A1"] = "a1Comp";
+		}
+		else if(Number(pos["A1"])>=22 && (dice_val + Number(pos["A1"]) > 28) ){
+			
+			newpos["A1"] = pos["A1"];
+		}
+		else
+		{	
+			newpos["A1"] =dice_val + Number(pos["A1"]);
+		}
+		display();
+		removeAllListenersFunction();
+	}
+	function movea2() {
+		
+		if(Number(pos["A2"])>=22 && (dice_val + Number(pos["A2"]) === 28) ){
+			newpos["A2"] = "a2Comp";
+		}
+		else if(Number(pos["A2"])>=22 && (dice_val + Number(pos["A2"]) > 28) ){
+			alert("You need an exact number to finish");
+			newpos["A2"] = pos["A2"];
+		}
+		else{
+			newpos["A2"] =dice_val + Number(pos["A2"]);
+			
+		}
+		display();
+		removeAllListenersFunction();
+	}
+	function moveb1() {
+		if(Number(pos["B1"]) <= 13)
+		{
+			if(Number(pos["B1"]) < 8)
+			{
+				newpos["B1"] = dice_val + Number(pos["B1"]);
+			}
+
+			else if(Number(pos["B1"])>=8 && (dice_val + Number(pos["B1"]) === 14) )
+			{
+				newpos["B1"] = "b1Comp";
+			}
+			else if( Number(pos["B1"])>=8 && (dice_val + Number(pos["B1"]) >= 14) )
+			{
+				alert("You need an exact number to finish.");
+				newpos["B1"] = pos["B1"];
+			}
+			display();
+			removeAllListenersFunction();
+			return;
+		}
+		newpos["B1"] = dice_val + Number(pos["B1"]);
+		if(Number(newpos["B1"]) > 27)
+			newpos["B1"] = String(Number(newpos["B1"] - 28));
+		display();
+		removeAllListenersFunction();
+	}
+	function moveb2() {
+		if(Number(pos["B2"]) <= 13)
+		{
+			if(Number(pos["B2"]) < 8)
+			{
+				newpos["B2"] = dice_val + Number(pos["B2"]);
+			}
+
+			else if(Number(pos["B2"])>=8 && (dice_val + Number(pos["B2"]) === 14) )
+			{
+				newpos["B2"] = "b2Comp";
+			}
+			else if( Number(pos["B2"])>=8 && (dice_val + Number(pos["B2"]) >= 14) )
+			{
+				newpos["B2"] = pos["B2"];
+			}
+			display();
+			removeAllListenersFunction();
+			return;
+		}
+
+		newpos["B2"] =dice_val + Number(pos["B2"]);
+		if(Number(newpos["B2"]) > 27)
+			newpos["B2"] = String(Number(newpos["B2"] - 28));
+		display();
+		removeAllListenersFunction();
+	}
+	
+
+
+
+	function removeAllListenersFunction() {
+		$("#lockerA").off("click");
+		$("#lockerB").off("click");
+
+		//update this when move function done a1,a2,a3 ,a4.
+		$(".box").off("click");
+	}
+
+	function release() {
+
+		if(player === "a")
+		{
+			lockedA -=1;
+			freeA += 1;
+			var h1a;
+			box[0].style.backgroundImage = "url('red.png')";
+			$("#h1a").text(lockedA + "A");
+			//to update the pos class
+			h1a = "A" + freeA;
+			newpos[h1a] = 0;
+
+		}
+		else if(player === "b"){
+			lockedB -= 1;
+			freeB += 1;
+			var h1b;
+			$("#14")[0].style.backgroundImage = "url('blue.png')";
+			$("#h1b").text(lockedB + "B");
+			h1b = "B" + freeB;
+			newpos[h1b] = 14;
+		}
+		display();
+		removeAllListenersFunction();
+	}
+	
+
+	function take_turn() 
+	{
+		display();
+		//roll the dice and get a random no.
+		dice_val = Number($("#rtest").val());
+		document.getElementById('No_chosen').innerHTML = dice_val;
+			if (dice_val == 0)
+				random_no();
+		if(dice_val == 6)
+			sixoccurs(player);
+		else if(dice_val !== 6)
+			notSix(player);
+
+		
+		//box[8].style.backgroundImage = "url('red.png')";
+
+		//update whose turn its next.
+		updateTurn();
+	}
+
+
+	function notSix(player)
+	{
+		//document.getElementById("demo").innerHTML += "reached notSix()";
+		switch(player)
+		{
+			case "a":
+			
+			if(lockedA == 2)
+			{
+				//release();
+			}
+			else if(lockedA == 1)
+			{
+				movea1();
+
+			}
+			else if (lockedA == 0)
+			{
+				alert("Click on the red token you want to move");
+				if(pos["A1"] === pos["A2"])
+				{
+					var index = "#" + pos["A1"]; 
+					$(index).click(movea1);
+				}
+				else {
+					var index = "#" + pos["A1"]; 
+					$(index).click(movea1);
+					var index2 = "#" + pos["A2"]; 
+					$(index2).click(movea2);
+				}
+			}
+			break;	
+			case "b":
+			
+			if(lockedB == 2)
+			{
+				//release();
+			}
+			else if(lockedB == 1){
+				moveb1();
+			}
+			else if (lockedB == 0)
+			{
+				alert("Click on the blue token you want to move");
+				if(pos["B1"] === pos["B2"])
+				{
+					var index = "#" + pos["B1"]; 
+					$(index).click(moveb1);
+				}
+				else {
+					var index = "#" + pos["B1"]; 
+					$(index).click(moveb1);
+					var index2 = "#" + pos["B2"]; 
+					$(index2).click(moveb2);
+				}				
+			}
+			break;	
+
+		}
+	}	
+
+	function sixoccurs(player)
+	{
+		//document.getElementById("demo").innerHTML += "reached sixoccurs()";
+		switch(player)
+		{
+			case "a":
+			
+			if(lockedA == 2)
+			{
+				release();
+			}
+			else if(lockedA == 1){
+
+				alert("Click on the red block if you want to release or move forward");
+				var index = "#" + pos["A1"];
+				//update this 
+				$(index).click(movea1);
+				$("#lockerA").click(release);
+			}
+			else if (lockedA == 0)
+			{
+				alert("Click on red the token you want to move");
+				if(pos["A1"] === pos["A2"])
+				{
+					var index = "#" + pos["A1"]; 
+					$(index).click(movea1);
+				}
+				else 
+				{
+					var index = "#" + pos["A1"]; 
+					$(index).click(movea1);
+					var index2 = "#" + pos["A2"]; 
+					$(index2).click(movea2);
+				}
+			}
+			break;	
+			case "b":
+			if(lockedB == 2)
+			{
+				release();
+			}
+			else if(lockedB == 1){
+				alert("Click on the blue block if you want to release or move forward");
+				var index = "#" + pos["B1"];
+				//update this
+				$(index).click(moveb1);
+				$("#lockerB").click(release);
+			}
+			else if (lockedB == 0)
+			{
+				alert("Click on the blue token you want to move");
+				if(pos["B1"] === pos["B2"])
+				{
+					var index = "#" + pos["B1"]; 
+					$(index).click(moveb1);
+				}
+				else {
+					var index = "#" + pos["B1"]; 
+					$(index).click(moveb1);
+					var index2 = "#" + pos["B2"]; 
+					$(index2).click(moveb2);
+				}				
+			}
+			break;					
+		}
+	}
+	$("#roll").click(take_turn);
+	});
+	
+</script>
+</html>
