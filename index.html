@@ -1,7 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
-
+  	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" type="text/css" href="mystyle.css">
 	<script src="jquery-3.3.1.min.js"></script>
 
@@ -82,6 +83,12 @@
 
 </body>
 <script type="text/javascript">
+	$("#rtest").focus(function(){
+        $(this).css("background-color", "#1AAB8A");
+    });
+    $("#rtest").blur(function(){
+        $(this).css("background-color", "#ffffff");
+    });
 
 	$(document).ready(function(){
 	var dice_val;
@@ -98,7 +105,7 @@
 
 	function random_no(){
 		dice_val = 1+Math.floor(Math.random() * 6);
-		document.getElementById('No_chosen').innerHTML = dice_val;
+		$("#No_chosen").html("<img src = '" + dice_val + ".png'>");
 	}
 	function updateTurn() {
 		if (dice_val == 6)
@@ -246,6 +253,19 @@
 			$(str[1]).css("background-image","url('red.png')");
 			$(str[2]).css("background-image","url('blue.png')");
 			$(str[3]).css("background-image","url('blue.png')");
+
+
+			//what happens when they overlap
+			if(newpos["A1"] === newpos["A2"])
+			{
+				$(str[0]).css({"background-image":"url('red.png'), url('red.png')","background-position":"right bottom, left top"});
+			}
+			if(newpos["B1"] === newpos["B2"])
+			{
+				$(str[2]).css({"background-image":"url('blue.png'), url('blue.png')","background-position":"right bottom, left top"});
+			}
+
+
 		pos["A1"] = newpos["A1"];
 		pos["A2"] = newpos["A2"];
 		pos["B1"] = newpos["B1"];
@@ -399,13 +419,14 @@
 		display();
 		//roll the dice and get a random no.
 		dice_val = Number($("#rtest").val());
-		document.getElementById('No_chosen').innerHTML = dice_val;
+		$("#No_chosen").html("<img src = '" + dice_val + ".png'>");
 			if (dice_val == 0)
 				random_no();
 		if(dice_val == 6)
 			sixoccurs(player);
 		else if(dice_val !== 6)
 			notSix(player);
+
 
 		
 		//box[8].style.backgroundImage = "url('red.png')";
