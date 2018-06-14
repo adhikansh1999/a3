@@ -1,4 +1,6 @@
 	@import url('https://fonts.googleapis.com/css?family=Courgette');
+	@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+		
 	*{
 		background-repeat: no-repeat;
 		background-size: contain;
@@ -252,3 +254,22 @@
 		margin-top: 2vh;
 
 	}
+	#contact {
+			background-color: white;
+			border-radius: 5vh;
+			height: 60vh;
+			width: 80%;
+			position: absolute;
+			float: center;
+			left :10%;
+			top:20vh;
+			display: none;
+		}		
+		h3 {
+			font-family: 'Bebas','Open Sans', sans-serif;
+			letter-spacing: 5px;
+			color: #111;
+			font-size: 4.5em;
+			text-align: center;
+		  	margin-bottom: 40px;
+		}

@@ -78,17 +78,16 @@
 				</select><br />
 			</div>
 	</div>
+	<!-- -->
+	<div id="contact"><h3>Would You Like To Play Again?</h3>
+		<div style="position: absolute; left: 45%;"><button><a href="index.html">Play Again</a></button></div>
+	</div>	
 	<p id = "demo" style="position: relative;float: center; top : -68vh; left: -71vh;"></p>
-
+	<!-- -->
 
 </body>
 <script type="text/javascript">
-	$("#rtest").focus(function(){
-        $(this).css("background-color", "#1AAB8A");
-    });
-    $("#rtest").blur(function(){
-        $(this).css("background-color", "#ffffff");
-    });
+	
 
 	$(document).ready(function(){
 	var dice_val;
@@ -99,6 +98,13 @@
 	var pos = {A1: "-1", A2: "-1", B1: "-1", B2: "-1"};
 	var newpos = {A1: "-1", A2: "-1", B1: "-1", B2: "-1"};
 	var box = $(".box");
+	$("#contact").hide();	
+	$("#rtest").focus(function(){
+        $(this).css("background-color", "#1AAB8A");
+    });
+    $("#rtest").blur(function(){
+        $(this).css("background-color", "#ffffff");
+    });
 
 
 	document.getElementById("demo").innerHTML = "Roll the dice to see what happens";
@@ -276,11 +282,16 @@
 		{
 			alert("Congratulations!!!! player B wins. Refresh to start another game");
 			$("#roll").off("click");
+			//$("*").hide("slow");
+			$("#contact").fadeIn();
 		}
 		else if(  (pos["A1"] == "a1Comp" && pos["A2"] == "a2Comp") || (pos["A1"] == "a2Comp" && pos["A2"] == "a1Comp") )
 		{
 			alert("Congratulations!!!! player A wins. Refresh to start another game");
 			$("#roll").off("click");
+			//$("*").hide("slow");
+			$("#contact").fadeIn();
+
 		}
 		
 	}
@@ -310,7 +321,10 @@
 			newpos["A2"] = "a2Comp";
 		}
 		else if(Number(pos["A2"])>=22 && (dice_val + Number(pos["A2"]) > 28) ){
-			alert("You need an exact number to finish");
+
+			$("#demo").html("You need an exact number to finish").show();
+			setTimeout(function() { $("#demo").hide(); }, 3000);
+			//alert("You need an exact number to finish");
 			newpos["A2"] = pos["A2"];
 		}
 		else{
@@ -334,7 +348,9 @@
 			}
 			else if( Number(pos["B1"])>=8 && (dice_val + Number(pos["B1"]) >= 14) )
 			{
-				alert("You need an exact number to finish.");
+				$("#demo").html("You need an exact number to finish").show();
+				setTimeout(function() { $("#demo").hide(); }, 3000);
+				//alert("You need an exact number to finish.");
 				newpos["B1"] = pos["B1"];
 			}
 			display();
@@ -454,7 +470,9 @@
 			}
 			else if (lockedA == 0)
 			{
-				alert("Click on the red token you want to move");
+				$("#demo").html("Click on the red token you want to move").show();
+				setTimeout(function() { $("#demo").hide(); }, 3000);
+				//alert("Click on the red token you want to move");
 				if(pos["A1"] === pos["A2"])
 				{
 					var index = "#" + pos["A1"]; 
@@ -479,7 +497,9 @@
 			}
 			else if (lockedB == 0)
 			{
-				alert("Click on the blue token you want to move");
+				$("#demo").html("Click on the blue token you want to move").show();
+				setTimeout(function() { $("#demo").hide(); }, 3000);
+				//alert("Click on the blue token you want to move");
 				if(pos["B1"] === pos["B2"])
 				{
 					var index = "#" + pos["B1"]; 
@@ -509,7 +529,8 @@
 				release();
 			}
 			else if(lockedA == 1){
-
+				$("#demo").html("Click on the red block if you want to release or move forward").show();
+				setTimeout(function() { $("#demo").hide(); }, 3000);
 				alert("Click on the red block if you want to release or move forward");
 				var index = "#" + pos["A1"];
 				//update this 
@@ -518,7 +539,9 @@
 			}
 			else if (lockedA == 0)
 			{
-				alert("Click on red the token you want to move");
+				$("#demo").html("Click on the red token you want to move").show();
+				setTimeout(function() { $("#demo").hide(); }, 3000);
+				//alert("Click on red the token you want to move");
 				if(pos["A1"] === pos["A2"])
 				{
 					var index = "#" + pos["A1"]; 
@@ -539,6 +562,8 @@
 				release();
 			}
 			else if(lockedB == 1){
+				$("#demo").html("Click on the blue block if you want to release or move forward").show();
+				setTimeout(function() { $("#demo").hide(); }, 3000);
 				alert("Click on the blue block if you want to release or move forward");
 				var index = "#" + pos["B1"];
 				//update this
@@ -547,7 +572,9 @@
 			}
 			else if (lockedB == 0)
 			{
-				alert("Click on the blue token you want to move");
+				$("#demo").html("Click on the blue token you want to move").show();
+				setTimeout(function() { $("#demo").hide(); }, 3000);
+				//alert("Click on the blue token you want to move");
 				if(pos["B1"] === pos["B2"])
 				{
 					var index = "#" + pos["B1"]; 
